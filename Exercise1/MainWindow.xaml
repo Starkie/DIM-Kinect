@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="0,0,0,-157">
-        <Image x:Name="KinectImage" HorizontalAlignment="Left" Height="480" Margin="82,10,0,-71" VerticalAlignment="Top" Width="640" />
-        <TextBlock x:Name="ErrorText" HorizontalAlignment="Left" Height="305" Margin="127,93,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="551" Visibility="Hidden" FontSize="48" />
-    </Grid>
+    <Canvas Margin="0,0,0,-157">
+        <Image x:Name="KinectImage" HorizontalAlignment="Left" Height="480" VerticalAlignment="Top" Width="640" Canvas.Left="10" Canvas.Top="10" />
+        <TextBlock x:Name="ErrorText" HorizontalAlignment="Left" Height="305" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="551" Visibility="Hidden" FontSize="48" Canvas.Left="127" Canvas.Top="93" />
+        <ComboBox x:Name="selectedStream" Canvas.Left="655" Canvas.Top="150" Width="120">
+            <ComboBoxItem Name="colorStreamOption">Color Stream</ComboBoxItem>
+            <ComboBoxItem Name="depthStreamOption">Depth Stream</ComboBoxItem>
+        </ComboBox>
+    </Canvas>
 </Window>
