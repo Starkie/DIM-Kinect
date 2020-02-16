@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Dim.Kinect.Excercise1"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
+        Closing="Window_Closing"
         Title="MainWindow" Height="450" Width="800">
     <Canvas Margin="0,0,0,-157">
         <Image x:Name="KinectImage" HorizontalAlignment="Left" Height="480" VerticalAlignment="Top" Width="640" Canvas.Left="10" Canvas.Top="10" />

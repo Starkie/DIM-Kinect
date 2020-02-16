@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,6 +34,11 @@ namespace Dim.Kinect.Excercise1
             this.sensor = ConfigureKinectSensor();
 
             this.KinectImage.Source = colorBitmap;
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            this.sensor.Stop();
         }
 
         private void SelectionChange(object sender, SelectionChangedEventArgs e)
