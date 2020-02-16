@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsqueletoPlantilla", "Exerc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exercise2", "Exercise2", "{50853136-E8B8-4A11-9927-CAD78F08955B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Execrise1", "Execrise1", "{EAE24E65-081C-46A1-A346-48E7B363EC94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exercise3", "Exercise3", "{F40FFCB0-A9E7-45D3-8707-0843B95FA151}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsqueletoGestos", "Exercise3\EsqueletoGestosPlantilla\EsqueletoGestos.csproj", "{7C0127DC-1938-4F5A-AE12-F2BEE1E3C51A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +29,18 @@ Global
 		{8121846D-923E-4BB0-8647-30DA753D156E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8121846D-923E-4BB0-8647-30DA753D156E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8121846D-923E-4BB0-8647-30DA753D156E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0127DC-1938-4F5A-AE12-F2BEE1E3C51A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0127DC-1938-4F5A-AE12-F2BEE1E3C51A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0127DC-1938-4F5A-AE12-F2BEE1E3C51A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0127DC-1938-4F5A-AE12-F2BEE1E3C51A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{CB91A1D3-E639-475A-B144-73CD6B382D0C} = {EAE24E65-081C-46A1-A346-48E7B363EC94}
 		{8121846D-923E-4BB0-8647-30DA753D156E} = {50853136-E8B8-4A11-9927-CAD78F08955B}
+		{7C0127DC-1938-4F5A-AE12-F2BEE1E3C51A} = {F40FFCB0-A9E7-45D3-8707-0843B95FA151}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1403D124-3E1E-4E6D-86EF-CA234D242FF1}
