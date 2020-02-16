@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>Dim.Kinect.Excercise1</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Dim.Kinect.Excercise1</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Kinect">
+      <HintPath>$(KINECTSDK10_DIR)\Assemblies\Microsoft.Kinect.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+</Project>
