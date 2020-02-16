@@ -6,6 +6,7 @@
 
 namespace EsqueletoGestos
 {
+    using System;
     using System.IO;
     using System.Windows;
     using System.Windows.Media;
@@ -57,14 +58,17 @@ namespace EsqueletoGestos
         /// <summary> Drawing image that we will display </summary>
         private DrawingImage imageSource;
 
+        //***********************TO DO*******************************
+        // Definir reconocedores como miembros privados
+        private SwipeGestureDetector swipeGestureDetector;
+
+        private TemplatedGestureDetector templatedGestureDetector;
+
         private byte[] colorPixels;
         private WriteableBitmap colorBitmap;
         private DepthImagePixel[] depthPixels;
         private bool isColorSelectedStream;
-
-        //***********************TO DO*******************************
-        // Definir reconocedores como miembros privados
-        private SwipeGestureDetector swipeGestureDetector;
+        private bool isSkeletonEnabled;
 
         /// <summary> Initializes a new instance of the MainWindow class. </summary>
         public MainWindow()
@@ -78,7 +82,15 @@ namespace EsqueletoGestos
         {
             if (gesture.StartsWith("Swipe", System.StringComparison.InvariantCultureIgnoreCase))
             {
-                this.isColorSelectedStream = !isColorSelectedStream;
+                this.isColorSelectedStream = !this.isColorSelectedStream;
+            }
+        }
+
+        private void OnGestureCircleDetected(string gesture)
+        {
+            if (gesture.Equals("circleGesture", StringComparison.InvariantCultureIgnoreCase))
+            {
+                this.isSkeletonEnabled = !this.isSkeletonEnabled;
             }
         }
 
@@ -131,9 +143,19 @@ namespace EsqueletoGestos
             // Path.Combine(Environment.CurrentDirectory, @"Datos\circleKB.save")
             this.swipeGestureDetector = new SwipeGestureDetector();
 
+            using (FileStream fileStream = File.Open(Path.Combine(Environment.CurrentDirectory, @"Datos\circleKB.save"), FileMode.Open))
+            {
+                this.templatedGestureDetector = new TemplatedGestureDetector("circleGesture", fileStream);
+            }
+
             //********************TO DO*************************************
             // Añadir los manejadores como listeners de OnGestureDetected
+
             this.swipeGestureDetector.OnGestureDetected += this.OnGestureDetected;
+            this.templatedGestureDetector.OnGestureDetected += this.OnGestureCircleDetected;
+
+            this.isColorSelectedStream = true;
+            this.isSkeletonEnabled = true;
 
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();
@@ -248,34 +270,37 @@ namespace EsqueletoGestos
         /// <param name="drawingContext"> drawing context to draw to </param>
         private void DrawBonesAndJoints(Skeleton skeleton, DrawingContext drawingContext)
         {
-            // Render Torso
-            this.DrawBone(skeleton, drawingContext, JointType.Head, JointType.ShoulderCenter);
-            this.DrawBone(skeleton, drawingContext, JointType.ShoulderCenter, JointType.ShoulderLeft);
-            this.DrawBone(skeleton, drawingContext, JointType.ShoulderCenter, JointType.ShoulderRight);
-            this.DrawBone(skeleton, drawingContext, JointType.ShoulderCenter, JointType.Spine);
-            this.DrawBone(skeleton, drawingContext, JointType.Spine, JointType.HipCenter);
-            this.DrawBone(skeleton, drawingContext, JointType.HipCenter, JointType.HipLeft);
-            this.DrawBone(skeleton, drawingContext, JointType.HipCenter, JointType.HipRight);
+            if (isSkeletonEnabled)
+            {
+                // Render Torso
+                this.DrawBone(skeleton, drawingContext, JointType.Head, JointType.ShoulderCenter);
+                this.DrawBone(skeleton, drawingContext, JointType.ShoulderCenter, JointType.ShoulderLeft);
+                this.DrawBone(skeleton, drawingContext, JointType.ShoulderCenter, JointType.ShoulderRight);
+                this.DrawBone(skeleton, drawingContext, JointType.ShoulderCenter, JointType.Spine);
+                this.DrawBone(skeleton, drawingContext, JointType.Spine, JointType.HipCenter);
+                this.DrawBone(skeleton, drawingContext, JointType.HipCenter, JointType.HipLeft);
+                this.DrawBone(skeleton, drawingContext, JointType.HipCenter, JointType.HipRight);
 
-            // Left Arm
-            this.DrawBone(skeleton, drawingContext, JointType.ShoulderLeft, JointType.ElbowLeft);
-            this.DrawBone(skeleton, drawingContext, JointType.ElbowLeft, JointType.WristLeft);
-            this.DrawBone(skeleton, drawingContext, JointType.WristLeft, JointType.HandLeft);
+                // Left Arm
+                this.DrawBone(skeleton, drawingContext, JointType.ShoulderLeft, JointType.ElbowLeft);
+                this.DrawBone(skeleton, drawingContext, JointType.ElbowLeft, JointType.WristLeft);
+                this.DrawBone(skeleton, drawingContext, JointType.WristLeft, JointType.HandLeft);
 
-            // Right Arm
-            this.DrawBone(skeleton, drawingContext, JointType.ShoulderRight, JointType.ElbowRight);
-            this.DrawBone(skeleton, drawingContext, JointType.ElbowRight, JointType.WristRight);
-            this.DrawBone(skeleton, drawingContext, JointType.WristRight, JointType.HandRight);
+                // Right Arm
+                this.DrawBone(skeleton, drawingContext, JointType.ShoulderRight, JointType.ElbowRight);
+                this.DrawBone(skeleton, drawingContext, JointType.ElbowRight, JointType.WristRight);
+                this.DrawBone(skeleton, drawingContext, JointType.WristRight, JointType.HandRight);
 
-            // Left Leg
-            this.DrawBone(skeleton, drawingContext, JointType.HipLeft, JointType.KneeLeft);
-            this.DrawBone(skeleton, drawingContext, JointType.KneeLeft, JointType.AnkleLeft);
-            this.DrawBone(skeleton, drawingContext, JointType.AnkleLeft, JointType.FootLeft);
+                // Left Leg
+                this.DrawBone(skeleton, drawingContext, JointType.HipLeft, JointType.KneeLeft);
+                this.DrawBone(skeleton, drawingContext, JointType.KneeLeft, JointType.AnkleLeft);
+                this.DrawBone(skeleton, drawingContext, JointType.AnkleLeft, JointType.FootLeft);
 
-            // Right Leg
-            this.DrawBone(skeleton, drawingContext, JointType.HipRight, JointType.KneeRight);
-            this.DrawBone(skeleton, drawingContext, JointType.KneeRight, JointType.AnkleRight);
-            this.DrawBone(skeleton, drawingContext, JointType.AnkleRight, JointType.FootRight);
+                // Right Leg
+                this.DrawBone(skeleton, drawingContext, JointType.HipRight, JointType.KneeRight);
+                this.DrawBone(skeleton, drawingContext, JointType.KneeRight, JointType.AnkleRight);
+                this.DrawBone(skeleton, drawingContext, JointType.AnkleRight, JointType.FootRight);
+            }
 
             // Render Joints
             foreach (Joint joint in skeleton.Joints)
@@ -291,7 +316,7 @@ namespace EsqueletoGestos
                     drawBrush = this.inferredJointBrush;
                 }
 
-                if (drawBrush != null)
+                if (drawBrush != null && this.isSkeletonEnabled)
                 {
                     drawingContext.DrawEllipse(drawBrush, null, this.SkeletonPointToScreen(joint.Position), JointThickness, JointThickness);
                 }
@@ -302,7 +327,12 @@ namespace EsqueletoGestos
                 // añadir la posición del Joint al reconocedor
                 if (joint.JointType == JointType.HandLeft && joint.TrackingState == JointTrackingState.Tracked)
                 {
-                    swipeGestureDetector.Add(joint.Position, this.sensor);
+                    this.swipeGestureDetector.Add(joint.Position, this.sensor);
+                }
+
+                if (joint.TrackingState == JointTrackingState.Tracked && joint.JointType == JointType.HandRight)
+                {
+                    this.templatedGestureDetector.Add(joint.Position, this.sensor);
                 }
             }
         }
